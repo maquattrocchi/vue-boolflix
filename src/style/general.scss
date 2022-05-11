@@ -7,4 +7,18 @@ $fa-font-path: './webfonts';
 @import '~@fortawesome/fontawesome-free/scss/solid.scss';
 
 //STYLE
-@import './vars.scss'
+@import './vars.scss';
+
+body{
+    background-color: $bg-color;
+}
+::-webkit-scrollbar {
+    width: 0.8rem;
+}
+::-webkit-scrollbar-track {
+    background-color: $bg-color;
+}
+::-webkit-scrollbar-thumb {
+    background-color: $black-color;
+    border-radius: 100px;
+}

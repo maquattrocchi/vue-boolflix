@@ -1,7 +1,10 @@
 <template>
     <div id="app">
         <header>
-            <search-component @search="searchItem"/>
+            <div class="container d-flex align-items-center justify-content-between h-100">
+                <h1>Boolflix</h1>
+                <search-component @search="searchItem"/>
+            </div>
         </header>
         <main>
             <main-component :list="listMovie"/>
@@ -65,4 +68,18 @@ export default {
 
 <style lang="scss">
 @import './style/general';
+header{
+    height: 80px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+
+    h1{
+        text-transform: uppercase;
+        color: $netflix-color;
+    }
+}
+main{
+    padding-top: 80px;
+}
 </style>

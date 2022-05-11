@@ -17,7 +17,8 @@ export default {
     },
     methods:{
         searchWord(){
-            this.$emit('search', this.searchText)
+            this.$emit('search', this.searchText);
+            this.searchText = '';
         }
     }
 }
