@@ -1,68 +1,61 @@
 <template>
     <div>
-        <search-component @search="searchItem"/>
         <section>
             <ul>
-                <li v-for="(movie, index) in listMovie" :key="index">'TITOLO:' {{movie.title}} 'TITOLO ORIGINALE:' {{movie.original_title}} 'LINGUA:' {{movie.original_language}} 'VOTO: {{movie.vote_average}}</li>
-            </ul>
-            <ul>
-                <li v-for="(serie, index) in listTv" :key="index">'TITOLO:' {{serie.name}} 'TITOLO ORIGINALE:' {{serie.original_name}} 'LINGUA:' {{serie.original_language}} 'VOTO:' {{serie.vote_average}}</li>
+                <li v-for="(item, index) in list" :key="index">
+                    'IMG' : <img v-if="item.poster_path !== null" :src="'https://image.tmdb.org/t/p/w342'+item.poster_path" :alt="item.title ? item.title : item.name"> 
+                    <img v-else src="../assets/img/notFoundPoster.jpg" alt="" class="poster-img"><br>
+
+                    'TITOLO:' {{item.title ? item.title : item.name}} <br>
+
+                    'TITOLO ORIGINALE:' {{item.original_title ? item.original_title : item.original_name}} <br> 
+
+                    'LINGUA:' 
+                    <img v-if="listLanguage.includes(item.original_language)" :src="'https://www.countryflagicons.com/FLAT/24/'+flagControl(item.original_language)+'.png'"> 
+                    <img v-else src="../assets/img/notFound.png" alt="" class="flag-img"> <br>
+
+                    'VOTO:' <i v-for="index in changeNumber(item.vote_average)"
+                                :key="index"
+                                class="fas fa-star">
+                            </i>
+                </li>
             </ul>
         </section>
     </div>
 </template>
 
 <script>
-import axios from 'axios';
-import SearchComponent from './SearchComponent.vue';
 
 export default {
     name: 'MainComponent',
-    components: { 
-        SearchComponent 
+    props:{
+        list: Array,
     },
     data(){
-        return{
-            search: '',
-            listMovie: [],
-            listTv: [],
-            apiUrl: 'https://api.themoviedb.org/3/search/',
-            apiKey: '2091b727419e6dd8af30ea95fd480178'
+        return {
+            listLanguage: ['en', 'it', 'fr', 'ru', 'de', 'jp']
         }
     },
-    methods:{
-        searchItem(txt){
-            this.search = txt
-            console.log(this.search)
-            this.setSearch()
+    methods: {
+        changeNumber(number){
+            return Math.round(number/2)
         },
-        searchFilm(paramsObj){
-            return axios.get(this.apiUrl + 'movie', paramsObj);
-        },
-        searchTv(paramsObj){
-            return axios.get(this.apiUrl + 'tv', paramsObj);
-        },
-        setSearch(){
-            const paramsObj = {
-                params: {
-                    api_key: this.apiKey,
-                    query: this.search,
-                    language: 'it-IT'
-                }
+        flagControl(language){
+            if(language === 'en'){
+                language = 'gb'
             }
-            Promise.all([this.searchFilm(paramsObj), this.searchTv(paramsObj)]).then((res)=>{
-                this.listMovie = res[0].data.results;
-                this.listTv = res[1].data.results;
-                console.log(this.listMovie)
-                console.log(this.listTv)
-            }).catch((error)=>{
-                console.log(error)
-            });
+            return language.toUpperCase()
         }
-    }
+    },
 }
 </script>
 
 <style lang="scss" scoped>
-
+.flag-img{
+    height: 24px;
+}
+.poster-img{
+    height: 513px;
+    width: 342px;
+}
 </style>

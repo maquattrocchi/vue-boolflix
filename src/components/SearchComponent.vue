@@ -6,13 +6,14 @@
 </template>
 
 <script>
-
 export default {
     name: 'SearchComponent',
     data(){
         return{
             searchText: '',
         }
+    },
+    components:{
     },
     methods:{
         searchWord(){
