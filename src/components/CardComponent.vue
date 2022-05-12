@@ -1,75 +1,77 @@
 <template>
     <div class="cs_card">
-        <img v-if="item.poster_path !== null" :src="'https://image.tmdb.org/t/p/w342'+item.poster_path" :alt="item.title ? item.title : item.name" class="img_poster">
+        <img v-if="item.poster_path !== null" :src="srcPoster+item.poster_path" :alt="item.title ? item.title : item.name" class="img_poster">
         <img v-else src="../assets/img/notFoundPoster.jpg" alt="" class="img_poster">
+
         <div class="card_description">
+            <!-- titolo -->
             <div>
                 <span class="cs_info">Titolo:</span> 
-                {{item.title ? item.title : item.name}}
+                <span>{{title}}</span> 
             </div>
+            <!-- titolo originale -->
             <div>
                 <span class="cs_info">Titolo Originale:</span> 
-                {{item.original_title ? item.original_title : item.original_name}}
+                <span>{{originalTitle}}</span>
             </div>
+            <!-- bandiera -->
             <div>
                 <span class="cs_info">Lingua:</span>
-                <img v-if="listLanguage.includes(item.original_language)" :src="'https://www.countryflagicons.com/FLAT/24/'+flagControl(item.original_language)+'.png'"> 
+                <img v-if="listLanguage.includes(flagControl)" :src="srcFlag+flagControl+'.png'"> 
                 <img v-else src="../assets/img/notFound.png" alt="" class="flag-img">
             </div>
+            <!-- voto -->
             <div>
                 <span class="cs_info">Voto:</span>
-                <i v-for="index in changeNumber(item.vote_average)" :key="index" class="fas fa-star"></i>
+                <span v-for="index in 5" :key="index"><i  :class="index <= newVote ? 'fa-solid fa-star' : 'fa-regular fa-star'"></i></span> 
             </div>
+            <!-- trama -->
             <div class="overview">
                 <span class="cs_info">Overview</span>
-                {{item.overview}}
+                <span>{{item.overview}}</span>
             </div>
         </div>
     </div>
-    <!-- <div class="card">
-        <img v-if="item.poster_path !== null" :src="'https://image.tmdb.org/t/p/w342'+item.poster_path" :alt="item.title ? item.title : item.name" class="card-img">
-        <img v-else src="../assets/img/notFoundPoster.jpg" alt="" class="poster-img">
-        <div class="card-img-overlay">
-            <div class="card-title">
-                <span>Titolo:</span> 
-                {{item.title ? item.title : item.name}}
-            </div>
-            <div class="card-title">
-                <span>Titolo Originale:</span> 
-                {{item.original_title ? item.original_title : item.original_name}}
-            </div>
-            <div class="card-title">
-                <span>Lingua</span>
-                <img v-if="listLanguage.includes(item.original_language)" :src="'https://www.countryflagicons.com/FLAT/24/'+flagControl(item.original_language)+'.png'"> 
-                <img v-else src="../assets/img/notFound.png" alt="" class="flag-img">
-            </div>
-            <div class="card-title">
-                <i v-for="index in changeNumber(item.vote_average)" :key="index" class="fas fa-star"></i>
-            </div>
-        </div>
-    </div> -->
 </template>
 
 <script>
+import flag from '../library.js';
 export default {
     name:'CardComponent',
     props: ['item'],
     data(){
         return {
-            listLanguage: ['en', 'it', 'fr', 'ru', 'de', 'jp']
+            listLanguage: [...flag],
+            srcPoster: 'https://image.tmdb.org/t/p/w342',
+            srcFlag: 'https://www.countryflagicons.com/FLAT/24/',
         }
     },
-     methods: {
-        changeNumber(number){
-            return Math.round(number/2)
+    computed:{
+        newVote(){
+            return Math.round(this.item.vote_average/2)
         },
-        flagControl(language){
-            if(language === 'en'){
-                language = 'gb'
+        flagControl(){
+            if(this.item.original_language === 'en'){
+                return 'GB'
+            }else if(this.item.original_language === 'ko'){
+                return 'KR'
+            }else if(this.item.original_language === 'ja'){
+                return 'JP'
             }
-            return language.toUpperCase()
+            return this.item.original_language.toUpperCase()
+        },
+        originalTitle(){
+            return this.item.original_title ? this.item.original_title : this.item.original_name
+        },
+        title(){
+            return this.item.title ? this.item.title : this.item.name
         }
     },
+    // methods: {
+    //     flagControl(language){
+            
+    //     }
+    // },
 }
 </script>
 
@@ -118,16 +120,4 @@ export default {
         }
     }
 }
-// .card{
-
-//     .poster-img{
-//         width: 100%;
-//         height: 100%;
-//         object-fit: cover;
-//     }
-// }
-//     .flag-img{
-//         height: 24px;
-//     }
-    
 </style>
