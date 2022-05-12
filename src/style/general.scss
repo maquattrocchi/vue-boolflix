@@ -1,6 +1,10 @@
 //BOOTSTRAP
 @import "~bootstrap/scss/bootstrap.scss";
 
+//FONT
+@import "@fontsource/bebas-neue/index.css";
+@import "@fontsource/bebas-neue/400.css";
+
 //FONTAWESOME
 $fa-font-path: './webfonts';
 @import '~@fortawesome/fontawesome-free/scss/fontawesome.scss';
@@ -12,7 +16,8 @@ $fa-font-path: './webfonts';
 
 body{
     background-color: $bg-color;
-    color: $text-color
+    color: $text-color;
+    font-family: "Bebas Neue", cursive;
 }
 ::-webkit-scrollbar {
     width: 0.8rem;

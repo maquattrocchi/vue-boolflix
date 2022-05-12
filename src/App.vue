@@ -2,7 +2,7 @@
     <div id="app">
         <header>
             <div class="container d-flex align-items-center justify-content-between h-100">
-                <h1>Boolflix</h1>
+                <nav-component/>
                 <search-component @search="searchItem"/>
             </div>
         </header>
@@ -17,15 +17,16 @@
 import axios from 'axios'
 import SearchComponent from './components/SearchComponent.vue'
 import MainComponent from './components/MainComponent.vue'
+import NavComponent from './components/NavComponent.vue'
 
 export default {
     name: 'App',
     components: {
         SearchComponent,
         MainComponent,
+        NavComponent,
     },
-    data(){
-        return{
+    data(){ return{
             search: '',
             listMovie: [],
             listTv: [],
@@ -94,11 +95,6 @@ header{
     background-color: $bg-color;
     width: 100%;
     z-index: 1000;
-
-    h1{
-        text-transform: uppercase;
-        color: $netflix-color;
-    }
 }
 main{
     padding-top: 80px;
