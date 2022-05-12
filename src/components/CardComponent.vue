@@ -23,7 +23,7 @@
             <!-- voto -->
             <div>
                 <span class="cs_info">Voto:</span>
-                <span v-for="index in 5" :key="index"><i  :class="index <= newVote ? 'fa-solid fa-star' : 'fa-regular fa-star'"></i></span> 
+                <span v-for="index in 5" :key="index"><i :class="index <= newVote ? 'fa-solid fa-star' : 'fa-regular fa-star'"></i></span> 
             </div>
             <!-- trama -->
             <div class="overview">
@@ -67,11 +67,6 @@ export default {
             return this.item.title ? this.item.title : this.item.name
         }
     },
-    // methods: {
-    //     flagControl(language){
-            
-    //     }
-    // },
 }
 </script>
 
@@ -98,14 +93,14 @@ export default {
         right: 0;
         height: 100%;
         background-color: $bg-color;
-        color: grey;
+        color: $text-color;
         font-size: 1.1rem;
         padding: 1rem;
         display: none;
         font-weight: bold;
         
         .cs_info{
-            color: white;
+            color: $netflix-color;
         }
         .overview{
             text-overflow:ellipsis;

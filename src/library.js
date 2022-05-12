@@ -248,4 +248,5 @@ const flagArray = [
 	"ZW",
 	"AX"
 ];
+
 export default flagArray

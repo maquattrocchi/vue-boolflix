@@ -1,28 +1,38 @@
 <template>
     <section class="container">
-        <div class="item-box">
-            <card-component :item="item" v-for="(item, index) in list" :key="index"/>
+        <loader-component v-if="loading"/>
+        <div v-else>
+            <h2>{{categoria}}</h2>
+            <div class="item-box">
+                <card-component :item="item" v-for="(item, index) in list" :key="index"/>
+            </div>
         </div>
     </section>
 </template>
 
 <script>
 import CardComponent from './CardComponent.vue'
+import LoaderComponent from './LoaderComponent.vue'
 export default {
     name: 'MainComponent',
     components:{
         CardComponent,
+        LoaderComponent,
     },
     props:{
         list: Array,
+        categoria: String,
+        loading: Boolean,
     },
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+@import '../style/vars';
 .item-box{
-    margin: 2rem 0;
+    margin: 3rem 0;
     display: flex;
+    box-shadow: -1px 1px 13px 5px $netflix-color;
     overflow-x: auto;
     gap: 0.5rem;
 }
