@@ -3,12 +3,13 @@
         <header>
             <div class="container d-flex align-items-center justify-content-between h-100">
                 <nav-component/>
-                <search-component @search="searchItem"/>
+                <search-component @search="setSearch"/>
             </div>
         </header>
         <main>
-            <main-component :list="listMovie" :categoria="movieTitle" :loading="loading" :research="search"/>
-            <main-component :list="listTv" :categoria="tvTitle" :loading="loading" :research="search"/>
+            <select-component @search="setSearchGenre"/>
+            <main-component :list="filteredMovie" :categoria="movieTitle" :loading="loading" :research="search"/>
+            <main-component :list="filteredSeries" :categoria="tvTitle" :loading="loading" :research="search"/>
         </main>
     </div>
 </template>
@@ -18,6 +19,7 @@ import axios from 'axios'
 import SearchComponent from './components/SearchComponent.vue'
 import MainComponent from './components/MainComponent.vue'
 import NavComponent from './components/NavComponent.vue'
+import SelectComponent from './components/SelectComponent.vue'
 
 export default {
     name: 'App',
@@ -25,20 +27,22 @@ export default {
         SearchComponent,
         MainComponent,
         NavComponent,
+        SelectComponent,
     },
     data(){ return{
-            search: '',
-            listMovie: [],
-            listTv: [],
             apiUrl: 'https://api.themoviedb.org/3/search/',
             apiKey: '2091b727419e6dd8af30ea95fd480178',
             loading: false,
+            search: '',
             movieTitle: '',
             tvTitle: '',
+            searchGenre: '',
+            listMovie: [],
+            listTv: [],
         }
     },
     methods:{
-        searchItem(txt){
+        setSearch(txt){
             this.movieTitle = 'Movies';
             this.tvTitle = 'Series'
             this.search = txt
@@ -49,8 +53,11 @@ export default {
                     language: 'it-IT'
                 }
             }
-            console.log(this.search)
-            this.setSearch(paramsObj)
+            this.searchAll(paramsObj)
+        },
+        setSearchGenre(txt){
+            this.searchGenre = txt
+            console.log(this.searchGenre)
         },
         searchFilm(paramsObj){
             return axios.get(this.apiUrl + 'movie', paramsObj);
@@ -58,16 +65,41 @@ export default {
         searchTv(paramsObj){
             return axios.get(this.apiUrl + 'tv', paramsObj);
         },
-        setSearch(paramsObj){
+        searchAll(paramsObj){
             this.loading= true,
             Promise.all([this.searchFilm(paramsObj), this.searchTv(paramsObj)]).then((res)=>{
                 this.listMovie = res[0].data.results;
                 this.listTv = res[1].data.results;
                 this.loading = false;
+                console.log(this.listMovie)
             }).catch((error)=>{
                 console.log(error)
                 this.loading = false;
             });
+        }
+    },
+    computed:{
+        filteredMovie(){
+            if(this.searchGenre === ''){
+                return this.listMovie
+            }else{
+                return this.listMovie.filter((element)=>{
+                    if(element.genre_ids.includes(this.searchGenre)){
+                        return true
+                    }
+                })
+            }
+        },
+        filteredSeries(){
+            if(this.searchGenre === ''){
+                return this.listTv
+            }else{
+                return this.listTv.filter((element)=>{
+                    if(element.genre_ids.includes(this.searchGenre)){
+                        return true
+                    }
+                })
+            }
         }
     },
     mounted(){
@@ -81,7 +113,7 @@ export default {
                 language: 'it-IT'
             }
         }
-        this.setSearch(paramsObj)
+        this.searchAll(paramsObj)
     }
 }
 </script>

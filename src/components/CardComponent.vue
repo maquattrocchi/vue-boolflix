@@ -85,7 +85,8 @@ export default {
                 if (this.movieCast.length >= 5){
                     this.movieCast.length = 5
                 }
-                console.log(this.movieCast)
+            }).catch((error)=>{
+                console.log(error)
             })
         }else{
             axios.get('https://api.themoviedb.org/3/tv/' + this.item.id + '/credits?api_key=2091b727419e6dd8af30ea95fd480178&language=it-IT').then((res)=>{
@@ -93,7 +94,8 @@ export default {
                 if (this.seriesCast.length >= 5){
                     this.seriesCast.length = 5
                 }
-                console.log(this.seriesCast)
+            }).catch((error)=>{
+                console.log(error)
             })
         }
     }
@@ -109,7 +111,8 @@ export default {
     cursor: pointer;
 
     &:hover .card_description{
-        display: block;
+        //display: block;
+        opacity: 1;
     }
     & .img_poster{
         height: 100%;
@@ -122,11 +125,13 @@ export default {
         left: 0;
         right: 0;
         height: 100%;
-        background-color: $bg-color;
+        background-color: rgba($bg-color, 0.8);
         color: $text-color;
         font-size: 1.1rem;
         padding: 1rem;
-        display: none;
+        //display: none;
+        opacity: 0;
+        transition: opacity 1s;
 
         & .cs_info{
             color: $netflix-color;

@@ -1,10 +1,10 @@
 <template>
-    <section class="container">
+    <section>
         <loader-component v-if="loading"/>
         <div v-else>
-            <h2>{{categoria}}</h2>
+            <h2 class="ps-3">{{categoria}}</h2>
             <div class="item-box">
-                <p v-if="list.length === 0">Your search for "{{research}}" did not have any matches.</p>
+                <p v-if="list.length === 0">Your search did not have any matches.</p>
                 <card-component :item="item" v-for="(item, index) in list" :key="index"/>
             </div>
         </div>
@@ -37,6 +37,7 @@ export default {
     box-shadow: -1px 1px 13px 5px $netflix-color;
     overflow-x: auto;
     gap: 0.5rem;
+    padding: 0 1rem;
 
     &>p{
         font-size: 2rem;
