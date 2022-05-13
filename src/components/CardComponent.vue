@@ -30,11 +30,17 @@
                 <span class="cs_info">Overview: </span>
                 <span>{{item.overview}}</span>
             </div>
+            <!-- cast -->
+            <div class="cast">
+                <span class="cs_info">Cast: </span>
+                <span class="me-2" v-for="(member, index) in cast" :key="index">{{member.name}}</span> 
+            </div>
         </div>
     </div>
 </template>
 
 <script>
+import axios from 'axios';
 import flag from '../library.js';
 export default {
     name:'CardComponent',
@@ -44,6 +50,8 @@ export default {
             listLanguage: [...flag],
             srcPoster: 'https://image.tmdb.org/t/p/w342',
             srcFlag: 'https://www.countryflagicons.com/FLAT/24/',
+            movieCast: [],
+            seriesCast: [],
         }
     },
     computed:{
@@ -65,8 +73,30 @@ export default {
         },
         title(){
             return this.item.title ? this.item.title : this.item.name
+        },
+        cast(){
+            return this.item.original_title ? this.movieCast : this.seriesCast
         }
     },
+    mounted(){
+        if(this.item.original_title){
+            axios.get('https://api.themoviedb.org/3/movie/' + this.item.id + '/credits?api_key=2091b727419e6dd8af30ea95fd480178&language=it-IT').then((res)=>{
+                this.movieCast = res.data.cast;
+                if (this.movieCast.length >= 5){
+                    this.movieCast.length = 5
+                }
+                console.log(this.movieCast)
+            })
+        }else{
+            axios.get('https://api.themoviedb.org/3/tv/' + this.item.id + '/credits?api_key=2091b727419e6dd8af30ea95fd480178&language=it-IT').then((res)=>{
+                this.seriesCast = res.data.cast;
+                if (this.seriesCast.length >= 5){
+                    this.seriesCast.length = 5
+                }
+                console.log(this.seriesCast)
+            })
+        }
+    }
 }
 </script>
 
@@ -81,12 +111,12 @@ export default {
     &:hover .card_description{
         display: block;
     }
-    .img_poster{
+    & .img_poster{
         height: 100%;
         width: 300px;
         object-fit: cover;
     }
-    .card_description{
+    & .card_description{
         position: absolute;
         top: 0;
         left: 0;
@@ -98,11 +128,11 @@ export default {
         padding: 1rem;
         display: none;
 
-        .cs_info{
+        & .cs_info{
             color: $netflix-color;
             margin-right: 0.5rem;
         }
-        .overview{
+        & .overview{
             text-overflow:ellipsis;
             overflow:hidden;
             display: -webkit-box !important;
@@ -110,7 +140,7 @@ export default {
             -webkit-box-orient: vertical;
             white-space: normal;
         }
-        .flag-img{
+        & .flag-img{
             width: 24px;
         }
     }
