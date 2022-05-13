@@ -103,7 +103,7 @@ export default {
 <style lang="scss">
 @import '../style/vars';
 .cs_card{
-    height: 450px;
+    height: 500px;
     width: 300px;
     position: relative;
     cursor: pointer;

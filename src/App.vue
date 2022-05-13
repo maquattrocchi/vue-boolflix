@@ -7,8 +7,8 @@
             </div>
         </header>
         <main>
-            <main-component :list="listMovie" :categoria="movieTitle" :loading="loading"/>
-            <main-component :list="listTv" :categoria="tvTitle" :loading="loading"/>
+            <main-component :list="listMovie" :categoria="movieTitle" :loading="loading" :research="search"/>
+            <main-component :list="listTv" :categoria="tvTitle" :loading="loading" :research="search"/>
         </main>
     </div>
 </template>
