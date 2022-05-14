@@ -1,5 +1,5 @@
 <template>
-    <div class="text-center">
+    <div class="text-center mb-3">
         <select class="cs_select" name="genre" id="genre" @change="mySearch" v-model="selectOption">
             <option value="">Search by genre</option>
             <option :value="genre.id" v-for="(genre, index) in allGenres" :key="index">{{genre.name}}</option>
