@@ -1,5 +1,5 @@
 <template>
-    <div class="cs_box">
+    <div class="position-relative">
         <input class="cs_input" type="text" v-model="searchText" @keyup.enter="searchWord">
         <i @click="searchWord" class="fa-solid fa-magnifying-glass"></i>
         <i class="fa-solid fa-bell"></i>
@@ -28,15 +28,7 @@ export default {
 
 <style lang="scss">
 @import '../style/vars';
-.cs_box{
-    font-size: 1.3rem;
-    color: $text-color;
-    position: relative;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-
-    & .cs_input{
+    .cs_input{
         background-color: $black-color;
         border-radius: 50px;
         border: none;
@@ -44,18 +36,16 @@ export default {
         padding-left: 3rem;
         width: 200px;
     }
-    & .fa-solid{
+    .fa-solid{
         cursor: pointer;
 
         &.fa-magnifying-glass{
             position: absolute;
             left: 10px;
-            font-size: 1.3rem;
         }
     }
-
-    & img{
+    img{
         width: 25px;
+        cursor: pointer;
     }
-}
 </style>

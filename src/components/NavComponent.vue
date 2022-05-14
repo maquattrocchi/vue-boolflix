@@ -1,8 +1,7 @@
 <template>
-
-    <div class="d-flex align-items-center gap-3">
+    <div>
         <h1>Boolflix</h1>
-        <div class="dropdownd-block d-lg-none">
+        <div class="dropdown d-lg-none">
             <div class="menu_title" @click="dropMenu = !dropMenu">Sfoglia <i class="fa-solid fa-angle-down"></i></div>
             <ul class="cs_dropdown_menu" v-if="dropMenu">
                 <li v-for="(item, index) in menu" :key="index">
@@ -65,21 +64,15 @@ h1{
     margin-bottom: 0 !important;
 }
 .menu_title{
-    font-size: 1.5rem;
     cursor: pointer;
 }
 .cs_dropdown_menu{
     position: absolute;
     z-index: 1000;
     min-width: 10rem;
-    padding: 0.5rem 0;
-    margin: 0;
-    font-size: 1rem;
-    text-align: left;
-    list-style: none;
-    background-clip: padding-box;
-    border: 1px solid rgba(0, 0, 0, 0.15);
-    border-radius: 0.25rem;
+    padding: 1rem !important;
+    border: 1px solid $black-color;
+    border-radius: 1rem;
     background-color: $bg-color;
 
     & li{
@@ -92,13 +85,12 @@ ul {
 
     li{
         display: inline;
-        margin: 0.6rem;
+        margin-right: 0.5rem;
         list-style: none;
 
         & a{
             color: $text-color;
             text-decoration: none;
-            font-size: 1.3rem;
 
             &:hover,&.selected{
                 color: $netflix-color;

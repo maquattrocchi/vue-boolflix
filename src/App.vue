@@ -16,18 +16,18 @@
 
 <script>
 import axios from 'axios'
-import SearchComponent from './components/SearchComponent.vue'
-import MainComponent from './components/MainComponent.vue'
 import NavComponent from './components/NavComponent.vue'
+import SearchComponent from './components/SearchComponent.vue'
 import SelectComponent from './components/SelectComponent.vue'
+import MainComponent from './components/MainComponent.vue'
 
 export default {
     name: 'App',
     components: {
-        SearchComponent,
-        MainComponent,
         NavComponent,
+        SearchComponent,
         SelectComponent,
+        MainComponent,
     },
     data(){ return{
             apiUrl: 'https://api.themoviedb.org/3/search/',
@@ -127,6 +127,14 @@ header{
     background-color: $bg-color;
     width: 100%;
     z-index: 1000;
+
+    &>.container>div{
+        font-size: 1.3rem;
+        color: $text-color;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
 }
 main{
     padding-top: 80px;

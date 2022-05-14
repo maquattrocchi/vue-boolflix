@@ -111,13 +111,11 @@ export default {
     cursor: pointer;
 
     &:hover .card_description{
-        //display: block;
         opacity: 1;
     }
     & .img_poster{
         height: 100%;
         width: 300px;
-        object-fit: cover;
     }
     & .card_description{
         position: absolute;
@@ -129,7 +127,6 @@ export default {
         color: $text-color;
         font-size: 1.1rem;
         padding: 1rem;
-        //display: none;
         opacity: 0;
         transition: opacity 1s;
 
